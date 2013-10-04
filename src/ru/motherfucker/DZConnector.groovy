@@ -22,7 +22,7 @@ class DZConnector {
         return Jsoup.connect(properties.get("connector.dz.core.url"))
                 .cookie(properties.get("connector.dz.core.cookie.key"), properties.get("connector.dz.core.cookie.value"))
                 .data(properties.get("connector.dz.core.param.theme.key"), properties.get("connector.dz.param.theme.value"))
-                .data(properties.get("connector.dz.core.param.from.key"), (page * 30).toString())
+                .data(properties.get("connector.dz.core.param.from.key"), (page * Integer.parseInt(properties.get("ipb.page.size"))).toString())
                 .get()
     }
 }
