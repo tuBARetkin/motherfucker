@@ -1,0 +1,21 @@
+/dist/
+/core/src/main/webapp/WEB-INF/static/dist
+# Eclipse specific settings
+
+.classpath/
+.project/
+.settings/
+
+# IntelliJ Idea settings
+
+.idea/
+*.iml
+
+# Binaries
+
+target/
+application/
+core/target/
+
+#macos
+.DS_Store
