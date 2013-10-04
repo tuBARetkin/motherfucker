@@ -18,11 +18,11 @@ class DZConnector {
         return dzConnector
     }
 
-    Document getPage(int page){
+    Document getPage(int shift){
         return Jsoup.connect(properties.get("connector.dz.core.url"))
                 .cookie(properties.get("connector.dz.core.cookie.key"), properties.get("connector.dz.core.cookie.value"))
                 .data(properties.get("connector.dz.core.param.theme.key"), properties.get("connector.dz.param.theme.value"))
-                .data(properties.get("connector.dz.core.param.from.key"), (page * Integer.parseInt(properties.get("ipb.page.size"))).toString())
+                .data(properties.get("connector.dz.core.param.from.key"), (shift).toString())
                 .get()
     }
 }
