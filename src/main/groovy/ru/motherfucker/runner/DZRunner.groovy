@@ -1,8 +1,8 @@
 package ru.motherfucker.runner
-import ru.motherfucker.PageParser
-import ru.motherfucker.Post
-import ru.motherfucker.ProcessResult
-import ru.motherfucker.Processor
+import ru.motherfucker.parser.PageParser
+import ru.motherfucker.entity.Post
+import ru.motherfucker.entity.ProcessResult
+import ru.motherfucker.process.Processor
 
 /**
  * @author NGorelov

@@ -1,4 +1,4 @@
-package ru.motherfucker
+package ru.motherfucker.web
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document

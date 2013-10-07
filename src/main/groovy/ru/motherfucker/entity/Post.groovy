@@ -1,4 +1,4 @@
-package ru.motherfucker
+package ru.motherfucker.entity
 /**
  * @author NGorelov
  */

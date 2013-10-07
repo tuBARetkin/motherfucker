@@ -1,10 +1,12 @@
-package ru.motherfucker
+package ru.motherfucker.parser
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import ru.motherfucker.entity.Post
+import ru.motherfucker.web.DZConnector
 
 /**
  * @author NGorelov

@@ -1,6 +1,8 @@
-package ru.motherfucker
+package ru.motherfucker.process
 
 import org.springframework.stereotype.Component
+import ru.motherfucker.entity.Post
+import ru.motherfucker.entity.ProcessResult
 
 /**
  * @author NGorelov
