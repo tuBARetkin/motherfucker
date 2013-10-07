@@ -1,16 +1,23 @@
 package ru.motherfucker
-
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 
 /**
  * @author NGorelov
  */
+@Component
 class PageParser {
-    private DZConnector connector = DZConnector.getInstance()
+    @Autowired
+    private DZConnector connector
+
+    @Value("\${ipb.page.size}")
+    private int pageSize
+
     private List<Post> result = new ArrayList<Post>()
-    private int pageSize = Integer.parseInt(PropertyReader.getInstance().get("ipb.page.size"))
 
     List<Post> createPosts(){
         int shift = 0

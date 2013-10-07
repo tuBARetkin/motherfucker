@@ -1,8 +1,11 @@
 package ru.motherfucker
 
+import org.springframework.stereotype.Component
+
 /**
  * @author NGorelov
  */
+@Component
 class Processor {
     private Map<String, ProcessResult> results = new HashMap<String, Integer>()
 
