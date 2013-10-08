@@ -1,4 +1,5 @@
 package ru.motherfucker.parser
+
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -13,47 +14,27 @@ import ru.motherfucker.web.DZConnector
  */
 @Component
 class PageParser {
-    @Autowired
-    private DZConnector connector
+    @Autowired DZConnector connector
+    @Value('${ipb.page.size}') int pageSize
 
-    @Value("\${ipb.page.size}")
-    private int pageSize
+    List<Post> createPosts() {
+        List<Post> result = []
+        pageSize.times {
+            Document document = connector.getPage(it)
+            document.select(".ipbtable").each {
+                def post = new Post()
+                post.username = it.getElementsByClass("normalname")?.text()
 
-    private List<Post> result = new ArrayList<Post>()
+//                Elements postNumberNode = it.select(".postdetails a")
+//                if (postNumberNode && postNumberNode.size() > 0 && !postNumberNode.get(0).text()) {
+//                    post.number = Integer.parseInt(postNumberNode.get(0).text().substring(1))
+//                }
 
-    List<Post> createPosts(){
-        int shift = 0
-        while(true){
-            Document document = connector.getPage(shift)
-            parse(document.select(".ipbtable"))
-            if(result.size() % pageSize != 0){
-                break
+//                if (post.inNotEmpty()) {
+                    result << post
+//                }
             }
-            shift += pageSize
         }
-
         return result
-    }
-
-    def parse(Elements posts){
-        posts.each {
-            Element element ->
-                Elements usernameNode = element.getElementsByClass("normalname")
-                Elements postNumberNode = element.select(".postdetails a")
-
-                String username
-                int postNumber
-
-                if (usernameNode != null && !usernameNode.text().isEmpty()){
-                    username = usernameNode.text()
-                }
-                if (postNumberNode != null && postNumberNode.size() > 0 && !postNumberNode.get(0).text().isEmpty()){
-                    postNumber = Integer.parseInt(postNumberNode.get(0).text().substring(1))
-                }
-
-                if(username != null && postNumber != null){
-                    result.add(new Post(username: username, number: postNumber))
-                }
-        }
     }
 }
