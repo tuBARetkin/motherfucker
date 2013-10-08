@@ -1,7 +1,8 @@
 package ru.motherfucker.runner
-import ru.motherfucker.parser.PageParser
+
 import ru.motherfucker.entity.Post
 import ru.motherfucker.entity.ProcessResult
+import ru.motherfucker.parser.PageParser
 import ru.motherfucker.process.Processor
 
 /**
@@ -16,8 +17,8 @@ class DZRunner extends AbstractRunner {
     def run(){
         initContext()
 
-        List<Post> posts = ctx.getBean(PageParser.class).createPosts()
-        Map<String, ProcessResult> results = ctx.getBean(Processor.class).processPosts(posts)
+        List<Post> posts = ctx.getBean(PageParser).createPosts()
+        Map<String, ProcessResult> results = ctx.getBean(Processor).processPosts(posts)
         results.each {
             result ->
                 String user = result.getKey()
