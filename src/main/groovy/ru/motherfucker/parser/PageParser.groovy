@@ -43,7 +43,7 @@ class PageParser {
                 post.number = postNumberNode.get(0).text().substring(1).toInteger()
             }
 
-            if(post.isNotEmpty()){
+            if(!post.isEmpty()){
                 result << post
             }
         }

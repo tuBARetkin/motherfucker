@@ -7,6 +7,6 @@ public class Post {
     int number
 
     boolean isEmpty() {
-        !(username && number)
+        return !(username && number)
     }
 }
