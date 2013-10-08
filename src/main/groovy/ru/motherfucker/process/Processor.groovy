@@ -9,54 +9,31 @@ import ru.motherfucker.entity.ProcessResult
  */
 @Component
 class Processor {
-    private Map<String, ProcessResult> results = new HashMap<String, Integer>()
-
-    private prepare(List<Post> posts){
-        posts.each {
-            post -> results.put(post.getUsername(),
-                    new ProcessResult(
-                            username: post.getUsername(),
-                            postsCount: 0,
-                            selfPoints: 0
-                    ))
+    static Map<String, ProcessResult> processPosts(List<Post> posts) {
+        Map<String, ProcessResult> results = [:].withDefault { username ->
+            new ProcessResult(
+                    username: username,
+                    postsCount: 0,
+                    selfPoints: 0
+            )
         }
-    }
 
-    Map<String, Integer> processPosts(List<Post> posts){
-        prepare(posts)
+        posts.eachWithIndex { post, i ->
+            results[post.username].postsCount++
+            def max = results
+                    .grep { it.value.username != post.username }
+                    .max { it.value.postsCount }
 
-        for(int curPostNumber = 0; curPostNumber < posts.size(); curPostNumber++){
-            Post curPost = posts.get(curPostNumber)
-            ProcessResult curUserResult = results.get(curPost.getUsername())
-            curUserResult.setPostsCount(curUserResult.getPostsCount() + 1)
-
-            //Обнуляем если у юзера количество постов стало максимальным
-            if(checkMaxPostsCount(curPost.getUsername())){
-                results.get(curPost.getUsername()).setSelfPoints(0)
+            if (results[post.username].postsCount > (max?.value?.postsCount ?: 0)) {
+                results[post.username].selfPoints = 0
             }
 
-            //Добавляем слудеющему очко
-            if (curPostNumber + 1 < posts.size()){
-                Post nextPost = posts.get(curPostNumber + 1)
-                ProcessResult nextUserResult = results.get(nextPost.getUsername())
-                nextUserResult.setSelfPoints(nextUserResult.getSelfPoints() + 1)
+            if (i + 1 < posts.size()) {
+                results[posts[i].username].selfPoints++
             }
         }
 
-        return results;
+        return results
     }
 
-    boolean checkMaxPostsCount(String username){
-        int max = 0;
-        int current = results.get(username).getPostsCount()
-        results.each {
-            result ->
-                if (username != result.getKey()){
-                    int count = result.getValue().getPostsCount()
-                    max = count > max ? count : max
-                }
-        }
-
-        return current > max
-    }
 }
