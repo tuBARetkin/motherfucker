@@ -1,11 +1,8 @@
 package ru.motherfucker.web
-
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
-
 /**
  * @author NGorelov
  */

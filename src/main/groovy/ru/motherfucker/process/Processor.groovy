@@ -9,31 +9,32 @@ import ru.motherfucker.entity.ProcessResult
  */
 @Component
 class Processor {
-    static Map<String, ProcessResult> processPosts(List<Post> posts) {
-        Map<String, ProcessResult> results = [:].withDefault { username ->
+    Map<String, Integer> processPosts(List<Post> posts){
+        Map<String, ProcessResult> results = [:].withDefault { key ->
             new ProcessResult(
-                    username: username,
+                    username: key,
                     postsCount: 0,
                     selfPoints: 0
             )
         }
 
-        posts.eachWithIndex { post, i ->
-            results[post.username].postsCount++
-            def max = results
-                    .grep { it.value.username != post.username }
-                    .max { it.value.postsCount }
+        posts.eachWithIndex{ Post curPost, int curPostNumber ->
+            results[curPost.username]?.postsCount++
 
-            if (results[post.username].postsCount > (max?.value?.postsCount ?: 0)) {
-                results[post.username].selfPoints = 0
+            def max = results
+                .grep{ it.value.username != curPost.username }
+                .max{ it.value.postsCount }
+
+            if (results[curPost.username].postsCount > (max?.value?.postsCount ?: 0)) {
+                results[curPost.username].selfPoints = 0
             }
 
-            if (i + 1 < posts.size()) {
-                results[posts[i].username].selfPoints++
+            //Добавляем слудеющему очко
+            if (curPostNumber + 1 < posts.size()) {
+                results[posts[curPostNumber + 1].username].selfPoints++
             }
         }
 
         return results
     }
-
 }

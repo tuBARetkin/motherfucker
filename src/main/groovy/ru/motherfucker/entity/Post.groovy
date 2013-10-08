@@ -6,7 +6,7 @@ public class Post {
     String username
     int number
 
-    boolean inNotEmpty() {
-        username && number
+    boolean isEmpty() {
+        !(username && number)
     }
 }
