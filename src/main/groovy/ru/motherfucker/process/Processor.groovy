@@ -21,10 +21,12 @@ class Processor {
         posts.eachWithIndex{ Post curPost, int curPostNumber ->
             results[curPost.username]?.postsCount++
 
+            //Проверяем максимальное ли у пользователя количество сообщений
             def max = results
                 .grep{ it.value.username != curPost.username }
                 .max{ it.value.postsCount }
 
+            //Если да, то обнуляем ему счетчик
             if (results[curPost.username].postsCount > (max?.value?.postsCount ?: 0)) {
                 results[curPost.username].selfPoints = 0
             }
