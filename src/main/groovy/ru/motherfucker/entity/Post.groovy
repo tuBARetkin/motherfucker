@@ -5,4 +5,8 @@ package ru.motherfucker.entity
 public class Post {
     String username
     int number
+
+    boolean inNotEmpty() {
+        username && number
+    }
 }
